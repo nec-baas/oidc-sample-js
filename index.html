@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenID Connect sample</title>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/es6-promise.auto.min.js"></script>
+    <script src="js/baas.js"></script>
+    <script src="js/config.js"></script>
+</head>
+<body>
+<script>
+function convertAbsUrl(src) {
+    return $("<a>").attr("href", src).prop("href");
+}
+function getStartUri(redirectUri) {
+    var path = NebulaConfig.baseUri + "/1/" + NebulaConfig.tenant + "/auth/oidc/start?redirect="
+           + encodeURIComponent(redirectUri) + "&op=" + OpType + "&createUser=true";
+
+    if (Scope) {
+        path = path + "&scope=" + Scope;
+    }
+
+    return path;
+}
+
+function startOpenIDConnect() {
+    var redirectUri = convertAbsUrl("./landing.html");
+    var startUri = getStartUri(redirectUri);
+    document.location.href = startUri;
+};
+
+function startOpenIDConnectManualLogin() {
+    var redirectUri = convertAbsUrl("./landing_manual_login.html");
+    var startUri = getStartUri(redirectUri);
+    document.location.href = startUri;
+};
+
+</script>
+<h1>OpenID Connect sample</h1>
+
+<a href="#" onclick="startOpenIDConnect();">Start authentication</a>
+<br/>
+<a href="#" onclick="startOpenIDConnectManualLogin();">Start authentication(Manual Login)</a>
+
+</body>
+</html>
